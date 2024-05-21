@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\AMS_Sales.props" />
+</Project>
