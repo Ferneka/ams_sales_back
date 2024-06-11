@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AMS_Sales.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20240520193145_createTable")]
+    [Migration("20240601170258_createTable")]
     partial class createTable
     {
         /// <inheritdoc />
@@ -44,6 +44,9 @@ namespace AMS_Sales.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")

@@ -9,6 +9,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDataContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultContext")));
 builder.Services.AddControllers();
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -16,11 +17,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();   
+
 }
 app.MapControllers();
 app.UseHttpsRedirection();
-app.UseCors(
-
-);
+app.UseCors(options => 
+    { 
+        options.AllowAnyOrigin();
+        options.AllowAnyMethod();
+        options.AllowAnyHeader();
+    });
 app.Run();
 

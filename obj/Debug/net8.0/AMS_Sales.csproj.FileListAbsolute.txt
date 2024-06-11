@@ -254,3 +254,4 @@ C:\src\AMS\3A\_Sales\API\AMS_Sales\obj\Debug\net8.0\refint\AMS_Sales.dll
 C:\src\AMS\3A\_Sales\API\AMS_Sales\obj\Debug\net8.0\AMS_Sales.pdb
 C:\src\AMS\3A\_Sales\API\AMS_Sales\obj\Debug\net8.0\AMS_Sales.genruntimeconfig.cache
 C:\src\AMS\3A\_Sales\API\AMS_Sales\obj\Debug\net8.0\ref\AMS_Sales.dll
+C:\src\AMS\3A\_Sales\API\AMS_Sales\obj\Debug\net8.0\AMS_Sales.sourcelink.json

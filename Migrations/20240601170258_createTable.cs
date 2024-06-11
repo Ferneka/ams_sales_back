@@ -35,6 +35,7 @@ namespace AMS_Sales.Migrations
                     Price = table.Column<double>(type: "REAL", nullable: false),
                     ImageURL = table.Column<string>(type: "TEXT", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IdCategory = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

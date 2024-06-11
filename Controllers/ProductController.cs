@@ -8,6 +8,7 @@ using AMS_Sales.Domain;
 using AMS_Sales.Domain.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AMS_Sales.Domain.DTO;
 
 namespace AMS_Sales.Controllers
 {
@@ -28,6 +29,7 @@ namespace AMS_Sales.Controllers
                 Price = productRequest.Price,
                 ImageURL = productRequest.ImageURL,
                 IsActive = true,
+                CreatedDate = productRequest.CreatedDate,
                 IdCategory = productRequest.IdCategory
             };
             _context.Product.Add(product);
@@ -35,21 +37,27 @@ namespace AMS_Sales.Controllers
             return Ok(product);
         }
         [HttpGet]
-        public ActionResult<IEnumerable<Product>> GetAll(){
-            var listProduct = _context.Product.Include(p => p.Category).ToList();
-            var mapearProduct = listProduct.Select(p => new Product{
-                Id = p.Id,
-                Description = p.Description,
-                Stock = p.Stock,
-                Price = p.Price,
-                ImageURL = p.ImageURL,
-                IdCategory = p.IdCategory,
-                Category =  new Category{
-                    Id = p.Category.Id,
-                     Description = p.Category.Description
-                 }
-            }).ToList();
-            return Ok(mapearProduct);
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll(){
+            var listProduct = await  _context.Product.Where(p => p.IsActive == true).Include(p => p.Category).ToListAsync();
+            if(listProduct == null) return NotFound();
+            var response = new List<ProductDto>();
+            foreach(var product in listProduct){
+                    response.Add(
+                    new ProductDto{
+                        Id = product.Id,
+                        Description = product.Description,
+                        Stock = product.Stock,
+                        Price = product.Price,
+                        ImageURL = product.ImageURL,
+                        CategoryDto =  new CategoryDto{
+                            Id = product.Category.Id,
+                            Description = product.Category.Description,
+                            ImageURL = product.Category.ImageURL 
+                        }  
+                    }
+                );
+            }
+            return Ok(response);
         }
         [HttpGet("{id:guid}")]
         public ActionResult<Product> GetProductById(Guid id){
@@ -57,6 +65,28 @@ namespace AMS_Sales.Controllers
             if (product == null) return NotFound();
             return Ok(product);
         }
+        [HttpPut]
+        [Route("id:guid")]
+        public ActionResult Update(Guid id, ProductRequest productRequest){
+            var product = _context.Product.Find(id);
+            if (product == null) return NotFound(); 
+            product.Description = productRequest.Description;
+            product.Stock = productRequest.Stock;
+            product.Price = productRequest.Price;
+            product.ImageURL = productRequest.ImageURL;
+            _context.SaveChanges();
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("id:guid")]
+        public ActionResult Delete(Guid id){
+            var product = _context.Product.Find(id);
+            if(product == null) return NotFound();
+            product.IsActive = false;
+            _context.SaveChanges();
+            return Ok();
+        }
+
         
     }
 }
