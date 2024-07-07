@@ -35,7 +35,7 @@ namespace AMS_Sales.Controllers
             }
             return Ok(response);
         }
-        [HttpPost("{categoryRequest}")]
+        [HttpPost]
         public ActionResult Post(CategoryRequest categoryRequest){
             var category = new Category(){
                 Description = categoryRequest.Description,
@@ -53,8 +53,7 @@ namespace AMS_Sales.Controllers
             if(category == null) return NotFound();
             return Ok(category);
         }
-        [HttpPut]
-        [Route("{id:guid}")]
+        [HttpPut("{id:guid}")]
         public ActionResult Update(Guid id, CategoryRequest categoryRequest){
             var category =  _context.Category.Find(id);
             if(category == null) return NotFound();
@@ -63,8 +62,7 @@ namespace AMS_Sales.Controllers
             _context.SaveChanges();
             return Ok();
         }
-        [HttpDelete]
-        [Route("{id:guid}")]
+        [HttpDelete("{id:guid}")]
         public ActionResult Delete(Guid id){
             var category = _context.Category.Find(id);
             if(category == null) return NotFound();
