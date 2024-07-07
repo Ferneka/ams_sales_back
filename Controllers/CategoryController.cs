@@ -53,7 +53,8 @@ namespace AMS_Sales.Controllers
             if(category == null) return NotFound();
             return Ok(category);
         }
-        [HttpPut("{id:guid}")]
+        [HttpPut]
+        [Route("{id:guid}")]
         public ActionResult Update(Guid id, CategoryRequest categoryRequest){
             var category =  _context.Category.Find(id);
             if(category == null) return NotFound();
@@ -62,7 +63,8 @@ namespace AMS_Sales.Controllers
             _context.SaveChanges();
             return Ok();
         }
-        [HttpDelete("{id:guid}")]
+        [HttpDelete]
+        [Route("{id:guid}")]
         public ActionResult Delete(Guid id){
             var category = _context.Category.Find(id);
             if(category == null) return NotFound();

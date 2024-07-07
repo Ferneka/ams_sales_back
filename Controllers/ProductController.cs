@@ -59,7 +59,8 @@ namespace AMS_Sales.Controllers
             }
             return Ok(response);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet]
+        [Route("{id:guid}")]
         public ActionResult<Product> GetProductById(Guid id){
             var product = _context.Product.FirstOrDefault(prod => prod.Id == id);
             if (product == null) return NotFound();
